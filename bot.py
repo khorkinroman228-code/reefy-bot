@@ -28,6 +28,16 @@ MIN_TON_WITHDRAW = 2.0
 
 logging.basicConfig(level=logging.INFO)
 
+# ============ ID ПРЕМИУМ-ЭМОДЗИ ============
+E_CHECK = "5278411813468269386"    # ✅
+E_CROWN = "5276229330131772747"    # 👑
+E_INFO = "5278753302023004775"     # ℹ️
+E_MSG = "5278589204207528856"      # 📨
+E_SHIELD = "5276262671962892944"   # 🛡️
+E_CART = "5276314275994954605"     # 🛒
+E_BRIEFCASE = "5276398496008663230"  # 💼
+E_SOS = "5278647306525108244"      # 🆘
+
 # ============ СОСТОЯНИЯ ============
 class DealCreation(StatesGroup):
     choosing_role = State()
@@ -157,20 +167,22 @@ TEXTS = {
     "ru": {
         "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
-            "👑 <b>{brand} MARKET · GARANT</b> 👑\n\n"
-            "ℹ️ <b>Наши преимущества:</b>\n\n"
-            "✅ Защита от мошенников\n"
-            "✅ Автоматическое удержание средств\n"
-            "✅ Прозрачная статистика\n"
-            "✅ Поддержка 24/7\n"
-            "✅ История сделок\n\n"
-            "📨 <b>Техническая поддержка:</b> {support}\n\n"
-            "🛡 {brand} Market — безопасные сделки 24/7"
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
+            "<b>{brand} MARKET · GARANT</b> "
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji>\n\n"
+            f"<tg-emoji emoji-id='{E_INFO}'>ℹ️</tg-emoji> <b>Наши преимущества:</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Защита от мошенников\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Автоматическое удержание средств\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Прозрачная статистика\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Поддержка 24/7\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> История сделок\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Техническая поддержка:</b> {{support}}\n\n"
+            f"<tg-emoji emoji-id='{E_SHIELD}'>🛡️</tg-emoji> {{brand}} Market — безопасные сделки 24/7"
         ),
-        "btn_create_deal": "🛒 Создать сделку",
-        "btn_my_balance": "💼 Мой баланс",
-        "btn_requisites": "📨 Реквизиты",
-        "btn_support": "🆘 Поддержка",
+        "btn_create_deal": "Создать сделку",
+        "btn_my_balance": "Мой баланс",
+        "btn_requisites": "Реквизиты",
+        "btn_support": "Поддержка",
         "btn_back_menu": "◀️ Вернуться в меню",
         "btn_seller": "👤 Я продавец",
         "btn_ton_wallet": "💎 На GRAM-кошелёк",
@@ -185,14 +197,14 @@ TEXTS = {
             "Выберите свою роль — и по ссылке второй участник войдёт в противоположной роли."
         ),
         "choose_payment": "💱 <b>Выберите метод получения оплаты:</b>",
-        "enter_amount": "💼 <b>Создание сделки</b>\n\nВведите сумму в формате: <code>100.5</code>",
+        "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>Создание сделки</b>\n\nВведите сумму в формате: <code>100.5</code>",
         "enter_description": (
             "📚 Укажите, что вы предлагаете в этой сделке.\n"
             "Пример: <i>10 Кепок и Пепе...</i>"
         ),
-        "req_not_added": "❌ <b>Реквизиты не добавлены</b>",
+        "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>Реквизиты не добавлены</b>",
         "deal_created": (
-            "✅ <b>Сделка успешно создана!</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Сделка успешно создана!</b>\n\n"
             "💱 Сумма: <b>{amount} {currency}</b>\n"
             "📚 Описание: <b>{description}</b>\n\n"
             "🔗 <b>Ссылка для покупателя:</b>\n{link}\n\n"
@@ -200,7 +212,7 @@ TEXTS = {
         ),
         "payment_confirmed_seller": (
             "🎉 <b>ПЛАТЕЖ ПОДТВЕРЖДЕН!</b>\n\n"
-            "✅ Покупатель @{buyer} подтвердил оплату\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Покупатель @{{buyer}} подтвердил оплату\n"
             "📦 Сделка: <b>#{code}</b>\n"
             "⭐ Товар: {description}\n"
             "💱 Сумма: <b>{amount} {currency}</b>\n\n"
@@ -215,12 +227,12 @@ TEXTS = {
             "🚫 <b>Не передавайте товар покупателю напрямую!</b>"
         ),
         "deal_completed_seller": (
-            "✅ <b>ВАША СДЕЛКА ЗАВЕРШЕНА.</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>ВАША СДЕЛКА ЗАВЕРШЕНА.</b>\n\n"
             "Средства успешно начислены на ваш баланс, "
-            "зайдите в раздел «💼 Мой баланс»"
+            "зайдите в раздел «Мой баланс»"
         ),
         "balance": (
-            "💼 <b>ВАШ БАЛАНС</b>\n\n"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>ВАШ БАЛАНС</b>\n\n"
             "👤 Пользователь: @{username}\n\n"
             "Доступные средства:\n"
             "💱 <b>{balance}</b>\n\n"
@@ -233,7 +245,7 @@ TEXTS = {
             "💼 Успешных сделок: <b>{deals}</b>"
         ),
         "req_menu": (
-            "📨 <b>Управление реквизитами</b>\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Управление реквизитами</b>\n\n"
             "Используйте кнопки ниже чтобы добавить/изменить реквизиты 🔽"
         ),
         "enter_ton": (
@@ -241,13 +253,13 @@ TEXTS = {
             "Пожалуйста, отправьте адрес вашего кошелька\n\n"
             "Важно:\n• Минимальная сумма вывода: {min_ton} TON"
         ),
-        "ton_added": "✅ <b>Адрес успешно добавлен</b>",
+        "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Адрес успешно добавлен</b>",
         "choose_region": (
             "🌍 <b>Выберите регион вашей карты / телефона:</b>\n\n"
             "Поддерживаются карты и номера России, Казахстана, Украины и Беларуси."
         ),
         "enter_card": "💳 Отправьте номер карты или телефона:",
-        "card_added": "✅ <b>Реквизиты успешно добавлены</b>",
+        "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Реквизиты успешно добавлены</b>",
         "not_added": "🚫 не добавлен",
         "not_added_req": "🚫 Реквизиты не добавлены",
         "empty": "0.00 (Пусто)",
@@ -258,37 +270,39 @@ TEXTS = {
             "💱 Сумма: <b>{amount} {currency}</b>\n\n"
             "Нажмите «Я оплатил» после перевода."
         ),
-        "buyer_paid": "✅ Вы подтвердили оплату. Ожидайте передачи товара менеджеру.",
-        "item_sent_ok": "✅ Отлично! Ожидайте подтверждения от покупателя.",
-        "deal_not_found": "❌ Сделка не найдена.",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Вы подтвердили оплату. Ожидайте передачи товара менеджеру.",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Отлично! Ожидайте подтверждения от покупателя.",
+        "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Сделка не найдена.",
         "admin_only": "⛔ Команда только для администратора.",
-        "invalid_amount": "❌ Введите корректное число, например: 100.5",
+        "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Введите корректное число, например: 100.5",
         "no_active_deals": "Нет активных сделок в статусе paid",
         "no_buyer": "Нет покупателя",
         "deal_already_done": "Сделка уже обработана",
         "error": "Ошибка",
-        "admin_deal_done": "✅ Сделка #{code} завершена, {amount} начислено продавцу",
+        "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Сделка #{{code}} завершена, {{amount}} начислено продавцу",
         "admin_set_deals_usage": "Использование: /set_my_deals <число>",
-        "admin_set_deals_ok": "✅ Установлено {n} успешных сделок",
+        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Установлено {{n}} успешных сделок",
     },
 
     "en": {
         "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
-            "👑 <b>{brand} MARKET · GARANT</b> 👑\n\n"
-            "ℹ️ <b>Our advantages:</b>\n\n"
-            "✅ Protection from scammers\n"
-            "✅ Automatic funds holding\n"
-            "✅ Transparent statistics\n"
-            "✅ 24/7 Support\n"
-            "✅ Deal history\n\n"
-            "📨 <b>Technical support:</b> {support}\n\n"
-            "🛡 {brand} Market — safe deals 24/7"
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
+            "<b>{brand} MARKET · GARANT</b> "
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji>\n\n"
+            f"<tg-emoji emoji-id='{E_INFO}'>ℹ️</tg-emoji> <b>Our advantages:</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Protection from scammers\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Automatic funds holding\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Transparent statistics\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 24/7 Support\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Deal history\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Technical support:</b> {{support}}\n\n"
+            f"<tg-emoji emoji-id='{E_SHIELD}'>🛡️</tg-emoji> {{brand}} Market — safe deals 24/7"
         ),
-        "btn_create_deal": "🛒 Create deal",
-        "btn_my_balance": "💼 My balance",
-        "btn_requisites": "📨 Requisites",
-        "btn_support": "🆘 Support",
+        "btn_create_deal": "Create deal",
+        "btn_my_balance": "My balance",
+        "btn_requisites": "Requisites",
+        "btn_support": "Support",
         "btn_back_menu": "◀️ Back to menu",
         "btn_seller": "👤 I'm a seller",
         "btn_ton_wallet": "💎 To GRAM wallet",
@@ -303,14 +317,14 @@ TEXTS = {
             "Choose your role — the second participant will join with the opposite role via link."
         ),
         "choose_payment": "💱 <b>Choose payout method:</b>",
-        "enter_amount": "💼 <b>Creating deal</b>\n\nEnter the amount, format: <code>100.5</code>",
+        "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>Creating deal</b>\n\nEnter the amount, format: <code>100.5</code>",
         "enter_description": (
             "📚 Specify what you offer in this deal.\n"
             "Example: <i>10 Caps and Pepe...</i>"
         ),
-        "req_not_added": "❌ <b>Requisites not added</b>",
+        "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>Requisites not added</b>",
         "deal_created": (
-            "✅ <b>Deal successfully created!</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Deal successfully created!</b>\n\n"
             "💱 Amount: <b>{amount} {currency}</b>\n"
             "📚 Description: <b>{description}</b>\n\n"
             "🔗 <b>Link for buyer:</b>\n{link}\n\n"
@@ -318,7 +332,7 @@ TEXTS = {
         ),
         "payment_confirmed_seller": (
             "🎉 <b>PAYMENT CONFIRMED!</b>\n\n"
-            "✅ Buyer @{buyer} confirmed payment\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Buyer @{{buyer}} confirmed payment\n"
             "📦 Deal: <b>#{code}</b>\n"
             "⭐ Item: {description}\n"
             "💱 Amount: <b>{amount} {currency}</b>\n\n"
@@ -333,12 +347,12 @@ TEXTS = {
             "🚫 <b>Do not send the item to the buyer directly!</b>"
         ),
         "deal_completed_seller": (
-            "✅ <b>YOUR DEAL IS COMPLETED.</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>YOUR DEAL IS COMPLETED.</b>\n\n"
             "Funds have been credited to your balance, "
-            "go to «💼 My balance»"
+            "go to «My balance»"
         ),
         "balance": (
-            "💼 <b>YOUR BALANCE</b>\n\n"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>YOUR BALANCE</b>\n\n"
             "👤 User: @{username}\n\n"
             "Available funds:\n"
             "💱 <b>{balance}</b>\n\n"
@@ -351,7 +365,7 @@ TEXTS = {
             "💼 Successful deals: <b>{deals}</b>"
         ),
         "req_menu": (
-            "📨 <b>Requisites management</b>\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Requisites management</b>\n\n"
             "Use the buttons below to add/change requisites 🔽"
         ),
         "enter_ton": (
@@ -359,13 +373,13 @@ TEXTS = {
             "Please send your wallet address\n\n"
             "Important:\n• Minimum withdrawal: {min_ton} TON"
         ),
-        "ton_added": "✅ <b>Address successfully added</b>",
+        "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Address successfully added</b>",
         "choose_region": (
             "🌍 <b>Choose your card/phone region:</b>\n\n"
             "Cards and numbers from Russia, Kazakhstan, Ukraine and Belarus are supported."
         ),
         "enter_card": "💳 Send your card or phone number:",
-        "card_added": "✅ <b>Requisites successfully added</b>",
+        "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Requisites successfully added</b>",
         "not_added": "🚫 not added",
         "not_added_req": "🚫 Requisites not added",
         "empty": "0.00 (Empty)",
@@ -376,37 +390,39 @@ TEXTS = {
             "💱 Amount: <b>{amount} {currency}</b>\n\n"
             "Press «I paid» after the transfer."
         ),
-        "buyer_paid": "✅ You confirmed payment. Wait for the item to be sent to the manager.",
-        "item_sent_ok": "✅ Great! Wait for buyer confirmation.",
-        "deal_not_found": "❌ Deal not found.",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> You confirmed payment. Wait for the item to be sent to the manager.",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Great! Wait for buyer confirmation.",
+        "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Deal not found.",
         "admin_only": "⛔ Admin-only command.",
-        "invalid_amount": "❌ Enter a valid number, e.g. 100.5",
+        "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Enter a valid number, e.g. 100.5",
         "no_active_deals": "No active deals in paid status",
         "no_buyer": "No buyer",
         "deal_already_done": "Deal already processed",
         "error": "Error",
-        "admin_deal_done": "✅ Deal #{code} completed, {amount} credited to seller",
+        "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Deal #{{code}} completed, {{amount}} credited to seller",
         "admin_set_deals_usage": "Usage: /set_my_deals <number>",
-        "admin_set_deals_ok": "✅ Set {n} successful deals",
+        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Set {{n}} successful deals",
     },
 
     "zh": {
         "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
-            "👑 <b>{brand} MARKET · GARANT</b> 👑\n\n"
-            "ℹ️ <b>我们的优势：</b>\n\n"
-            "✅ 防诈骗保护\n"
-            "✅ 自动资金托管\n"
-            "✅ 透明统计\n"
-            "✅ 24/7 客服支持\n"
-            "✅ 交易记录\n\n"
-            "📨 <b>技术支持：</b> {support}\n\n"
-            "🛡 {brand} Market — 24/7 安全交易"
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
+            "<b>{brand} MARKET · GARANT</b> "
+            f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji>\n\n"
+            f"<tg-emoji emoji-id='{E_INFO}'>ℹ️</tg-emoji> <b>我们的优势：</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 防诈骗保护\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 自动资金托管\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 透明统计\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 24/7 客服支持\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 交易记录\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>技术支持：</b> {{support}}\n\n"
+            f"<tg-emoji emoji-id='{E_SHIELD}'>🛡️</tg-emoji> {{brand}} Market — 24/7 安全交易"
         ),
-        "btn_create_deal": "🛒 创建交易",
-        "btn_my_balance": "💼 我的余额",
-        "btn_requisites": "📨 收款信息",
-        "btn_support": "🆘 客服支持",
+        "btn_create_deal": "创建交易",
+        "btn_my_balance": "我的余额",
+        "btn_requisites": "收款信息",
+        "btn_support": "客服支持",
         "btn_back_menu": "◀️ 返回菜单",
         "btn_seller": "👤 我是卖家",
         "btn_ton_wallet": "💎 到 GRAM 钱包",
@@ -421,14 +437,14 @@ TEXTS = {
             "请选择您的角色 — 第二个参与者将通过链接以相反角色加入。"
         ),
         "choose_payment": "💱 <b>请选择收款方式：</b>",
-        "enter_amount": "💼 <b>创建交易</b>\n\n请输入金额，格式：<code>100.5</code>",
+        "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>创建交易</b>\n\n请输入金额，格式：<code>100.5</code>",
         "enter_description": (
             "📚 请说明您在本交易中提供的物品。\n"
             "示例：<i>10 个帽子 和 Pepe...</i>"
         ),
-        "req_not_added": "❌ <b>收款信息未添加</b>",
+        "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>收款信息未添加</b>",
         "deal_created": (
-            "✅ <b>交易创建成功！</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>交易创建成功！</b>\n\n"
             "💱 金额：<b>{amount} {currency}</b>\n"
             "📚 描述：<b>{description}</b>\n\n"
             "🔗 <b>买家链接：</b>\n{link}\n\n"
@@ -436,7 +452,7 @@ TEXTS = {
         ),
         "payment_confirmed_seller": (
             "🎉 <b>付款已确认！</b>\n\n"
-            "✅ 买家 @{buyer} 已确认付款\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 买家 @{{buyer}} 已确认付款\n"
             "📦 交易：<b>#{code}</b>\n"
             "⭐ 物品：{description}\n"
             "💱 金额：<b>{amount} {currency}</b>\n\n"
@@ -451,12 +467,12 @@ TEXTS = {
             "🚫 <b>请勿直接将物品交给买家！</b>"
         ),
         "deal_completed_seller": (
-            "✅ <b>您的交易已完成。</b>\n\n"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>您的交易已完成。</b>\n\n"
             "资金已成功记入您的余额，"
-            "请前往 «💼 我的余额»"
+            "请前往 «我的余额»"
         ),
         "balance": (
-            "💼 <b>您的余额</b>\n\n"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>您的余额</b>\n\n"
             "👤 用户：@{username}\n\n"
             "可用资金：\n"
             "💱 <b>{balance}</b>\n\n"
@@ -469,7 +485,7 @@ TEXTS = {
             "💼 成功交易数：<b>{deals}</b>"
         ),
         "req_menu": (
-            "📨 <b>收款信息管理</b>\n\n"
+            f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>收款信息管理</b>\n\n"
             "使用下方按钮添加/修改收款信息 🔽"
         ),
         "enter_ton": (
@@ -477,13 +493,13 @@ TEXTS = {
             "请发送您的钱包地址\n\n"
             "重要：\n• 最低提现金额：{min_ton} TON"
         ),
-        "ton_added": "✅ <b>地址添加成功</b>",
+        "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>地址添加成功</b>",
         "choose_region": (
             "🌍 <b>请选择您银行卡/手机号的地区：</b>\n\n"
             "支持俄罗斯、哈萨克斯坦、乌克兰和白俄罗斯的银行卡和手机号。"
         ),
         "enter_card": "💳 请发送银行卡号或手机号：",
-        "card_added": "✅ <b>收款信息添加成功</b>",
+        "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>收款信息添加成功</b>",
         "not_added": "🚫 未添加",
         "not_added_req": "🚫 收款信息未添加",
         "empty": "0.00（空）",
@@ -494,18 +510,18 @@ TEXTS = {
             "💱 金额：<b>{amount} {currency}</b>\n\n"
             "转账后请点击 «我已付款»。"
         ),
-        "buyer_paid": "✅ 您已确认付款。请等待物品交给管理员。",
-        "item_sent_ok": "✅ 很好！请等待买家确认。",
-        "deal_not_found": "❌ 未找到交易。",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 您已确认付款。请等待物品交给管理员。",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 很好！请等待买家确认。",
+        "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 未找到交易。",
         "admin_only": "⛔ 仅管理员命令。",
-        "invalid_amount": "❌ 请输入有效数字，例如：100.5",
+        "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 请输入有效数字，例如：100.5",
         "no_active_deals": "没有处于已付款状态的交易",
         "no_buyer": "没有买家",
         "deal_already_done": "交易已处理",
         "error": "错误",
-        "admin_deal_done": "✅ 交易 #{code} 已完成，{amount} 已记入卖家余额",
+        "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 交易 #{{code}} 已完成，{{amount}} 已记入卖家余额",
         "admin_set_deals_usage": "用法：/set_my_deals <数字>",
-        "admin_set_deals_ok": "✅ 已设置 {n} 次成功交易",
+        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 已设置 {{n}} 次成功交易",
     },
 }
 
@@ -525,14 +541,27 @@ def lang_kb():
 
 def main_menu_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_create_deal"), callback_data="create_deal")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_create_deal"),
+            callback_data="create_deal",
+            icon_custom_emoji_id=E_CART,
+        )],
         [
-            InlineKeyboardButton(text=t(lang, "btn_my_balance"), callback_data="balance"),
-            InlineKeyboardButton(text=t(lang, "btn_requisites"), callback_data="requisites"),
+            InlineKeyboardButton(
+                text=t(lang, "btn_my_balance"),
+                callback_data="balance",
+                icon_custom_emoji_id=E_BRIEFCASE,
+            ),
+            InlineKeyboardButton(
+                text=t(lang, "btn_requisites"),
+                callback_data="requisites",
+                icon_custom_emoji_id=E_MSG,
+            ),
         ],
         [InlineKeyboardButton(
             text=t(lang, "btn_support"),
-            url=f"https://t.me/{MANAGER_USERNAME.lstrip('@')}"
+            url=f"https://t.me/{MANAGER_USERNAME.lstrip('@')}",
+            icon_custom_emoji_id=E_SOS,
         )],
     ])
 
@@ -563,7 +592,11 @@ def item_sent_kb(lang="ru"):
 
 def buyer_pay_kb(code, lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_paid"), callback_data=f"paid:{code}")]
+        [InlineKeyboardButton(
+            text=t(lang, "btn_paid"),
+            callback_data=f"paid:{code}",
+            icon_custom_emoji_id=E_CHECK,
+        )]
     ])
 
 def req_menu_kb(lang="ru"):
