@@ -26,29 +26,28 @@ ADMIN_IDS = [6311071254]
 DB_PATH = "reefy.db"
 MIN_TON_WITHDRAW = 2.0
 
-# Ссылка на фото для раздела поддержки
 SUPPORT_PHOTO = "https://i.imgur.com/F6UddrX.jpeg"
 
 logging.basicConfig(level=logging.INFO)
 
 # ============ ID ПРЕМИУМ-ЭМОДЗИ ============
-E_CHECK = "5278411813468269386"       # ✅
-E_CROWN = "5276229330131772747"       # 👑
-E_INFO = "5278753302023004775"        # ℹ️
-E_MSG = "5278589204207528856"         # 📨
-E_SHIELD = "5276262671962892944"      # 🛡️
-E_CART = "5276314275994954605"        # 🛒
-E_BRIEFCASE = "5276398496008663230"   # 💼
-E_SOS = "5278647306525108244"         # 🆘
-E_STAR = "5206476089127372379"        # ⭐️
-E_PEOPLE = "5298668674532538341"      # 👥
-E_USER = "5275979556308674886"        # 👤
-E_BACK = "5278413853577734640"        # ◀️
-E_DIAMOND = "5193179982775476271"     # 💎
-E_CARD = "5192689390136089826"        # 💳
-E_BOOK = "5206626000665868017"        # 📚
-E_GLOBE = "5239963889004732575"       # 🌐
-E_LINK = "5278305362703835500"        # 🔗
+E_CHECK = "5278411813468269386"
+E_CROWN = "5276229330131772747"
+E_INFO = "5278753302023004775"
+E_MSG = "5278589204207528856"
+E_SHIELD = "5276262671962892944"
+E_CART = "5276314275994954605"
+E_BRIEFCASE = "5276398496008663230"
+E_SOS = "5278647306525108244"
+E_STAR = "5206476089127372379"
+E_PEOPLE = "5298668674532538341"
+E_USER = "5275979556308674886"
+E_BACK = "5278413853577734640"
+E_DIAMOND = "5193179982775476271"
+E_CARD = "5192689390136089826"
+E_BOOK = "5206626000665868017"
+E_GLOBE = "5239963889004732575"
+E_LINK = "5278305362703835500"
 
 # ============ СОСТОЯНИЯ ============
 class DealCreation(StatesGroup):
@@ -240,9 +239,9 @@ TEXTS = {
             "🚫 <b>Не передавайте товар покупателю напрямую!</b>"
         ),
         "deal_completed_seller": (
-            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>ВАША СДЕЛКА ЗАВЕРШЕНА.</b>\n\n"
-            "Средства успешно начислены на ваш баланс, "
-            "зайдите в раздел «Мой баланс»"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>СДЕЛКА УСПЕШНО ЗАВЕРШЕНА!</b>\n\n"
+            "Средства зачислены на ваш счет. "
+            "Вы можете проверить их в разделе «Мой баланс»"
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>ВАШ БАЛАНС</b>\n\n"
@@ -284,8 +283,8 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Сумма: <b>{{amount}} {{currency}}</b>\n\n"
             "Нажмите «Я оплатил» после перевода."
         ),
-        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Вы подтвердили оплату. Ожидайте передачи товара менеджеру.",
-        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Отлично! Ожидайте подтверждения от покупателя.",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Вы подтвердили оплату. Ожидайте подтверждения от менеджера.",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Отлично! Ожидайте подтверждения от менеджера.",
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Сделка не найдена.",
         "admin_only": "⛔ Команда только для администратора.",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Введите корректное число, например: 100.5",
@@ -362,9 +361,9 @@ TEXTS = {
             "🚫 <b>Do not send the item to the buyer directly!</b>"
         ),
         "deal_completed_seller": (
-            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>YOUR DEAL IS COMPLETED.</b>\n\n"
-            "Funds have been credited to your balance, "
-            "go to «My balance»"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>DEAL SUCCESSFULLY COMPLETED!</b>\n\n"
+            "Funds have been credited to your account. "
+            "You can check them in the «My balance» section"
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>YOUR BALANCE</b>\n\n"
@@ -406,8 +405,8 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Amount: <b>{{amount}} {{currency}}</b>\n\n"
             "Press «I paid» after the transfer."
         ),
-        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> You confirmed payment. Wait for the item to be sent to the manager.",
-        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Great! Wait for buyer confirmation.",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> You confirmed payment. Wait for manager confirmation.",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Great! Wait for manager confirmation.",
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Deal not found.",
         "admin_only": "⛔ Admin-only command.",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Enter a valid number, e.g. 100.5",
@@ -484,9 +483,9 @@ TEXTS = {
             "🚫 <b>请勿直接将物品交给买家！</b>"
         ),
         "deal_completed_seller": (
-            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>您的交易已完成。</b>\n\n"
-            "资金已成功记入您的余额，"
-            "请前往 «我的余额»"
+            f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>交易已成功完成！</b>\n\n"
+            "资金已存入您的账户。"
+            "您可以在 «我的余额» 部分查看"
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>您的余额</b>\n\n"
@@ -528,8 +527,8 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> 金额：<b>{{amount}} {{currency}}</b>\n\n"
             "转账后请点击 «我已付款»。"
         ),
-        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 您已确认付款。请等待物品交给管理员。",
-        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 很好！请等待买家确认。",
+        "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 您已确认付款。请等待管理员确认。",
+        "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 很好！请等待管理员确认。",
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 未找到交易。",
         "admin_only": "⛔ 仅管理员命令。",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 请输入有效数字，例如：100.5",
@@ -745,7 +744,6 @@ async def back_to_menu(cb: CallbackQuery, state: FSMContext):
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
 
-    # Если предыдущее сообщение с фото — удаляем и отправляем меню заново
     try:
         await cb.message.delete()
     except Exception:
