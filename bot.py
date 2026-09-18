@@ -1,4 +1,4 @@
-import asyncio
+ import asyncio
 import logging
 import secrets
 import string
@@ -29,14 +29,21 @@ MIN_TON_WITHDRAW = 2.0
 logging.basicConfig(level=logging.INFO)
 
 # ============ ID ПРЕМИУМ-ЭМОДЗИ ============
-E_CHECK = "5278411813468269386"    # ✅
-E_CROWN = "5276229330131772747"    # 👑
-E_INFO = "5278753302023004775"     # ℹ️
-E_MSG = "5278589204207528856"      # 📨
-E_SHIELD = "5276262671962892944"   # 🛡️
-E_CART = "5276314275994954605"     # 🛒
-E_BRIEFCASE = "5276398496008663230"  # 💼
-E_SOS = "5278647306525108244"      # 🆘
+E_CHECK = "5278411813468269386"       # ✅
+E_CROWN = "5276229330131772747"       # 👑
+E_INFO = "5278753302023004775"        # ℹ️
+E_MSG = "5278589204207528856"         # 📨
+E_SHIELD = "5276262671962892944"      # 🛡️
+E_CART = "5276314275994954605"        # 🛒
+E_BRIEFCASE = "5276398496008663230"   # 💼
+E_SOS = "5278647306525108244"         # 🆘
+E_STAR = "5206476089127372379"        # ⭐️
+E_PEOPLE = "5298668674532538341"      # 👥
+E_USER = "5275979556308674886"        # 👤
+E_BACK = "5278413853577734640"        # ◀️
+E_DIAMOND = "5193179982775476271"     # 💎
+E_CARD = "5192689390136089826"        # 💳
+E_BOOK = "5206626000665868017"        # 📚
 
 # ============ СОСТОЯНИЯ ============
 class DealCreation(StatesGroup):
@@ -183,30 +190,30 @@ TEXTS = {
         "btn_my_balance": "Мой баланс",
         "btn_requisites": "Реквизиты",
         "btn_support": "Поддержка",
-        "btn_back_menu": "◀️ Вернуться в меню",
-        "btn_seller": "👤 Я продавец",
-        "btn_ton_wallet": "💎 На GRAM-кошелёк",
-        "btn_card_sbp": "💳 Перевод на карту/СБП",
-        "btn_stars": "⭐ Звёзды",
-        "btn_paid": "✅ Я оплатил",
-        "btn_item_sent": "📦 Товар передан менеджеру",
-        "btn_add_ton": "💎 Добавить/изменить GRAM-кошелёк",
-        "btn_add_card": "💳 Добавить карту/номер телефона",
+        "btn_back_menu": "Вернуться в меню",
+        "btn_seller": "Я продавец",
+        "btn_ton_wallet": "На GRAM-кошелёк",
+        "btn_card_sbp": "Перевод на карту/СБП",
+        "btn_stars": "Звёзды",
+        "btn_paid": "Я оплатил",
+        "btn_item_sent": "Товар передан менеджеру",
+        "btn_add_ton": "Добавить/изменить GRAM-кошелёк",
+        "btn_add_card": "Добавить карту/номер телефона",
         "choose_role": (
-            "👥 <b>Кем вы создаёте сделку?</b>\n\n"
+            f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>Кем вы создаёте сделку?</b>\n\n"
             "Выберите свою роль — и по ссылке второй участник войдёт в противоположной роли."
         ),
         "choose_payment": "💱 <b>Выберите метод получения оплаты:</b>",
         "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>Создание сделки</b>\n\nВведите сумму в формате: <code>100.5</code>",
         "enter_description": (
-            "📚 Укажите, что вы предлагаете в этой сделке.\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Укажите, что вы предлагаете в этой сделке.\n"
             "Пример: <i>10 Кепок и Пепе...</i>"
         ),
         "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>Реквизиты не добавлены</b>",
         "deal_created": (
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Сделка успешно создана!</b>\n\n"
-            "💱 Сумма: <b>{amount} {currency}</b>\n"
-            "📚 Описание: <b>{description}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Сумма: <b>{{amount}} {{currency}}</b>\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Описание: <b>{{description}}</b>\n\n"
             "🔗 <b>Ссылка для покупателя:</b>\n{link}\n\n"
             "<i>Скопируйте ссылку и отправьте покупателю</i>"
         ),
@@ -214,8 +221,8 @@ TEXTS = {
             "🎉 <b>ПЛАТЕЖ ПОДТВЕРЖДЕН!</b>\n\n"
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Покупатель @{{buyer}} подтвердил оплату\n"
             "📦 Сделка: <b>#{code}</b>\n"
-            "⭐ Товар: {description}\n"
-            "💱 Сумма: <b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> Товар: {{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Сумма: <b>{{amount}} {{currency}}</b>\n\n"
             "📊 <b>Финансовые условия:</b>\n"
             "• Комиссия системы: {percent}% ({commission} {currency})\n"
             "• К зачислению на баланс: <b>{to_receive} {currency}</b>\n\n"
@@ -233,23 +240,23 @@ TEXTS = {
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>ВАШ БАЛАНС</b>\n\n"
-            "👤 Пользователь: @{username}\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> Пользователь: @{{username}}\n\n"
             "Доступные средства:\n"
             "💱 <b>{balance}</b>\n\n"
             "🏦 <b>Информация о выводе средств:</b>\n"
-            "🪙 TON-кошелёк: {ton}\n"
-            "🏦 Карта / СБП: {card}\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON-кошелёк: {{ton}}\n"
+            f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Карта / СБП: {{card}}\n\n"
             "📁 <b>Информация:</b>\n"
             "• Комиссия системы: {percent}%\n"
             "• Вывод доступен на карту, номер или TON-кошелёк\n\n"
-            "💼 Успешных сделок: <b>{deals}</b>"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> Успешных сделок: <b>{{deals}}</b>"
         ),
         "req_menu": (
             f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Управление реквизитами</b>\n\n"
             "Используйте кнопки ниже чтобы добавить/изменить реквизиты 🔽"
         ),
         "enter_ton": (
-            "🔓 <b>Добавьте ваш TON-кошелёк:</b>\n\n"
+            f"🔓 <b>Добавьте ваш TON-кошелёк:</b>\n\n"
             "Пожалуйста, отправьте адрес вашего кошелька\n\n"
             "Важно:\n• Минимальная сумма вывода: {min_ton} TON"
         ),
@@ -258,16 +265,16 @@ TEXTS = {
             "🌍 <b>Выберите регион вашей карты / телефона:</b>\n\n"
             "Поддерживаются карты и номера России, Казахстана, Украины и Беларуси."
         ),
-        "enter_card": "💳 Отправьте номер карты или телефона:",
+        "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Отправьте номер карты или телефона:",
         "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Реквизиты успешно добавлены</b>",
         "not_added": "🚫 не добавлен",
         "not_added_req": "🚫 Реквизиты не добавлены",
         "empty": "0.00 (Пусто)",
         "join_deal": (
             "📦 <b>Сделка #{code}</b>\n\n"
-            "👤 Продавец: @{seller}\n"
-            "⭐ Товар: {description}\n"
-            "💱 Сумма: <b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> Продавец: @{{seller}}\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> Товар: {{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Сумма: <b>{{amount}} {{currency}}</b>\n\n"
             "Нажмите «Я оплатил» после перевода."
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Вы подтвердили оплату. Ожидайте передачи товара менеджеру.",
@@ -303,30 +310,30 @@ TEXTS = {
         "btn_my_balance": "My balance",
         "btn_requisites": "Requisites",
         "btn_support": "Support",
-        "btn_back_menu": "◀️ Back to menu",
-        "btn_seller": "👤 I'm a seller",
-        "btn_ton_wallet": "💎 To GRAM wallet",
-        "btn_card_sbp": "💳 Card / SBP transfer",
-        "btn_stars": "⭐ Stars",
-        "btn_paid": "✅ I paid",
-        "btn_item_sent": "📦 Item sent to manager",
-        "btn_add_ton": "💎 Add/change GRAM wallet",
-        "btn_add_card": "💳 Add card/phone number",
+        "btn_back_menu": "Back to menu",
+        "btn_seller": "I'm a seller",
+        "btn_ton_wallet": "To GRAM wallet",
+        "btn_card_sbp": "Card / SBP transfer",
+        "btn_stars": "Stars",
+        "btn_paid": "I paid",
+        "btn_item_sent": "Item sent to manager",
+        "btn_add_ton": "Add/change GRAM wallet",
+        "btn_add_card": "Add card/phone number",
         "choose_role": (
-            "👥 <b>Who are you in this deal?</b>\n\n"
+            f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>Who are you in this deal?</b>\n\n"
             "Choose your role — the second participant will join with the opposite role via link."
         ),
         "choose_payment": "💱 <b>Choose payout method:</b>",
         "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>Creating deal</b>\n\nEnter the amount, format: <code>100.5</code>",
         "enter_description": (
-            "📚 Specify what you offer in this deal.\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Specify what you offer in this deal.\n"
             "Example: <i>10 Caps and Pepe...</i>"
         ),
         "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>Requisites not added</b>",
         "deal_created": (
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Deal successfully created!</b>\n\n"
-            "💱 Amount: <b>{amount} {currency}</b>\n"
-            "📚 Description: <b>{description}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Amount: <b>{{amount}} {{currency}}</b>\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Description: <b>{{description}}</b>\n\n"
             "🔗 <b>Link for buyer:</b>\n{link}\n\n"
             "<i>Copy the link and send it to the buyer</i>"
         ),
@@ -334,8 +341,8 @@ TEXTS = {
             "🎉 <b>PAYMENT CONFIRMED!</b>\n\n"
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Buyer @{{buyer}} confirmed payment\n"
             "📦 Deal: <b>#{code}</b>\n"
-            "⭐ Item: {description}\n"
-            "💱 Amount: <b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> Item: {{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Amount: <b>{{amount}} {{currency}}</b>\n\n"
             "📊 <b>Financial terms:</b>\n"
             "• System commission: {percent}% ({commission} {currency})\n"
             "• To be credited: <b>{to_receive} {currency}</b>\n\n"
@@ -353,16 +360,16 @@ TEXTS = {
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>YOUR BALANCE</b>\n\n"
-            "👤 User: @{username}\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> User: @{{username}}\n\n"
             "Available funds:\n"
             "💱 <b>{balance}</b>\n\n"
             "🏦 <b>Withdrawal info:</b>\n"
-            "🪙 TON wallet: {ton}\n"
-            "🏦 Card / SBP: {card}\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON wallet: {{ton}}\n"
+            f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Card / SBP: {{card}}\n\n"
             "📁 <b>Info:</b>\n"
             "• System commission: {percent}%\n"
             "• Withdrawal available to card, number or TON wallet\n\n"
-            "💼 Successful deals: <b>{deals}</b>"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> Successful deals: <b>{{deals}}</b>"
         ),
         "req_menu": (
             f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>Requisites management</b>\n\n"
@@ -378,16 +385,16 @@ TEXTS = {
             "🌍 <b>Choose your card/phone region:</b>\n\n"
             "Cards and numbers from Russia, Kazakhstan, Ukraine and Belarus are supported."
         ),
-        "enter_card": "💳 Send your card or phone number:",
+        "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Send your card or phone number:",
         "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Requisites successfully added</b>",
         "not_added": "🚫 not added",
         "not_added_req": "🚫 Requisites not added",
         "empty": "0.00 (Empty)",
         "join_deal": (
             "📦 <b>Deal #{code}</b>\n\n"
-            "👤 Seller: @{seller}\n"
-            "⭐ Item: {description}\n"
-            "💱 Amount: <b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> Seller: @{{seller}}\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> Item: {{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Amount: <b>{{amount}} {{currency}}</b>\n\n"
             "Press «I paid» after the transfer."
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> You confirmed payment. Wait for the item to be sent to the manager.",
@@ -423,30 +430,30 @@ TEXTS = {
         "btn_my_balance": "我的余额",
         "btn_requisites": "收款信息",
         "btn_support": "客服支持",
-        "btn_back_menu": "◀️ 返回菜单",
-        "btn_seller": "👤 我是卖家",
-        "btn_ton_wallet": "💎 到 GRAM 钱包",
-        "btn_card_sbp": "💳 银行卡 / SBP 转账",
-        "btn_stars": "⭐ 星星",
-        "btn_paid": "✅ 我已付款",
-        "btn_item_sent": "📦 物品已交给管理员",
-        "btn_add_ton": "💎 添加/修改 GRAM 钱包",
-        "btn_add_card": "💳 添加银行卡/手机号",
+        "btn_back_menu": "返回菜单",
+        "btn_seller": "我是卖家",
+        "btn_ton_wallet": "到 GRAM 钱包",
+        "btn_card_sbp": "银行卡 / SBP 转账",
+        "btn_stars": "星星",
+        "btn_paid": "我已付款",
+        "btn_item_sent": "物品已交给管理员",
+        "btn_add_ton": "添加/修改 GRAM 钱包",
+        "btn_add_card": "添加银行卡/手机号",
         "choose_role": (
-            "👥 <b>您在本交易中的角色？</b>\n\n"
+            f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>您在本交易中的角色？</b>\n\n"
             "请选择您的角色 — 第二个参与者将通过链接以相反角色加入。"
         ),
         "choose_payment": "💱 <b>请选择收款方式：</b>",
         "enter_amount": f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>创建交易</b>\n\n请输入金额，格式：<code>100.5</code>",
         "enter_description": (
-            "📚 请说明您在本交易中提供的物品。\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> 请说明您在本交易中提供的物品。\n"
             "示例：<i>10 个帽子 和 Pepe...</i>"
         ),
         "req_not_added": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> <b>收款信息未添加</b>",
         "deal_created": (
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>交易创建成功！</b>\n\n"
-            "💱 金额：<b>{amount} {currency}</b>\n"
-            "📚 描述：<b>{description}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> 金额：<b>{{amount}} {{currency}}</b>\n"
+            f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> 描述：<b>{{description}}</b>\n\n"
             "🔗 <b>买家链接：</b>\n{link}\n\n"
             "<i>复制链接并发送给买家</i>"
         ),
@@ -454,8 +461,8 @@ TEXTS = {
             "🎉 <b>付款已确认！</b>\n\n"
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 买家 @{{buyer}} 已确认付款\n"
             "📦 交易：<b>#{code}</b>\n"
-            "⭐ 物品：{description}\n"
-            "💱 金额：<b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> 物品：{{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> 金额：<b>{{amount}} {{currency}}</b>\n\n"
             "📊 <b>费用详情：</b>\n"
             "• 系统佣金：{percent}% ({commission} {currency})\n"
             "• 到账金额：<b>{to_receive} {currency}</b>\n\n"
@@ -473,16 +480,16 @@ TEXTS = {
         ),
         "balance": (
             f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> <b>您的余额</b>\n\n"
-            "👤 用户：@{username}\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> 用户：@{{username}}\n\n"
             "可用资金：\n"
             "💱 <b>{balance}</b>\n\n"
             "🏦 <b>提现信息：</b>\n"
-            "🪙 TON 钱包：{ton}\n"
-            "🏦 银行卡 / SBP：{card}\n\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON 钱包：{{ton}}\n"
+            f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> 银行卡 / SBP：{{card}}\n\n"
             "📁 <b>信息：</b>\n"
             "• 系统佣金：{percent}%\n"
             "• 可提现至银行卡、手机号或 TON 钱包\n\n"
-            "💼 成功交易数：<b>{deals}</b>"
+            f"<tg-emoji emoji-id='{E_BRIEFCASE}'>💼</tg-emoji> 成功交易数：<b>{{deals}}</b>"
         ),
         "req_menu": (
             f"<tg-emoji emoji-id='{E_MSG}'>📨</tg-emoji> <b>收款信息管理</b>\n\n"
@@ -498,16 +505,16 @@ TEXTS = {
             "🌍 <b>请选择您银行卡/手机号的地区：</b>\n\n"
             "支持俄罗斯、哈萨克斯坦、乌克兰和白俄罗斯的银行卡和手机号。"
         ),
-        "enter_card": "💳 请发送银行卡号或手机号：",
+        "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> 请发送银行卡号或手机号：",
         "card_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>收款信息添加成功</b>",
         "not_added": "🚫 未添加",
         "not_added_req": "🚫 收款信息未添加",
         "empty": "0.00（空）",
         "join_deal": (
             "📦 <b>交易 #{code}</b>\n\n"
-            "👤 卖家：@{seller}\n"
-            "⭐ 物品：{description}\n"
-            "💱 金额：<b>{amount} {currency}</b>\n\n"
+            f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> 卖家：@{{seller}}\n"
+            f"<tg-emoji emoji-id='{E_STAR}'>⭐️</tg-emoji> 物品：{{description}}\n"
+            f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> 金额：<b>{{amount}} {{currency}}</b>\n\n"
             "转账后请点击 «我已付款»。"
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 您已确认付款。请等待物品交给管理员。",
@@ -567,27 +574,59 @@ def main_menu_kb(lang="ru"):
 
 def back_menu_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")]
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )]
     ])
 
 def role_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_seller"), callback_data="role:seller")],
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_seller"),
+            callback_data="role:seller",
+            icon_custom_emoji_id=E_USER,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )],
     ])
 
 def payment_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_ton_wallet"), callback_data="pay:TON")],
-        [InlineKeyboardButton(text=t(lang, "btn_card_sbp"), callback_data="pay:Карта/СБП")],
-        [InlineKeyboardButton(text=t(lang, "btn_stars"), callback_data="pay:Звёзды")],
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_ton_wallet"),
+            callback_data="pay:TON",
+            icon_custom_emoji_id=E_DIAMOND,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_card_sbp"),
+            callback_data="pay:Карта/СБП",
+            icon_custom_emoji_id=E_CARD,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_stars"),
+            callback_data="pay:Звёзды",
+            icon_custom_emoji_id=E_STAR,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )],
     ])
 
 def item_sent_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text=t(lang, "btn_item_sent"), callback_data="item_sent")],
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )],
     ])
 
 def buyer_pay_kb(code, lang="ru"):
@@ -601,9 +640,21 @@ def buyer_pay_kb(code, lang="ru"):
 
 def req_menu_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text=t(lang, "btn_add_ton"), callback_data="req:ton")],
-        [InlineKeyboardButton(text=t(lang, "btn_add_card"), callback_data="req:card")],
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_add_ton"),
+            callback_data="req:ton",
+            icon_custom_emoji_id=E_DIAMOND,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_add_card"),
+            callback_data="req:card",
+            icon_custom_emoji_id=E_CARD,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )],
     ])
 
 def region_kb(lang="ru"):
@@ -618,7 +669,11 @@ def region_kb(lang="ru"):
         [InlineKeyboardButton(text=r[1], callback_data="region:KZ")],
         [InlineKeyboardButton(text=r[2], callback_data="region:UA")],
         [InlineKeyboardButton(text=r[3], callback_data="region:BY")],
-        [InlineKeyboardButton(text=t(lang, "btn_back_menu"), callback_data="main_menu")],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
+        )],
     ])
 
 # ============ РОУТЕРЫ ============
