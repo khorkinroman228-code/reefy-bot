@@ -172,7 +172,7 @@ async def inc_deals(tg_id):
 # ============ ТЕКСТЫ ============
 TEXTS = {
     "ru": {
-        "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
+        "choose_lang": "🌐 Выберите язык / Choose language:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
@@ -292,7 +292,7 @@ TEXTS = {
     },
 
     "en": {
-        "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
+        "choose_lang": "🌐 Выберите язык / Choose language:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
