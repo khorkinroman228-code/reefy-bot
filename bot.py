@@ -26,6 +26,9 @@ ADMIN_IDS = [6311071254]
 DB_PATH = "reefy.db"
 MIN_TON_WITHDRAW = 2.0
 
+# Ссылка на фото для раздела поддержки
+SUPPORT_PHOTO = "https://i.imgur.com/F6UddrX.jpeg"
+
 logging.basicConfig(level=logging.INFO)
 
 # ============ ID ПРЕМИУМ-ЭМОДЗИ ============
@@ -201,6 +204,7 @@ TEXTS = {
         "btn_item_sent": "Товар передан менеджеру",
         "btn_add_ton": "Добавить/изменить GRAM-кошелёк",
         "btn_add_card": "Добавить карту/номер телефона",
+        "support_menu": "Для связи с поддержкой нажмите на кнопку ниже:",
         "choose_role": (
             f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>Кем вы создаёте сделку?</b>\n\n"
             "Выберите свою роль — и по ссылке второй участник войдёт в противоположной роли."
@@ -322,6 +326,7 @@ TEXTS = {
         "btn_item_sent": "Item sent to manager",
         "btn_add_ton": "Add/change GRAM wallet",
         "btn_add_card": "Add card/phone number",
+        "support_menu": "To contact support, press the button below:",
         "choose_role": (
             f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>Who are you in this deal?</b>\n\n"
             "Choose your role — the second participant will join with the opposite role via link."
@@ -443,6 +448,7 @@ TEXTS = {
         "btn_item_sent": "物品已交给管理员",
         "btn_add_ton": "添加/修改 GRAM 钱包",
         "btn_add_card": "添加银行卡/手机号",
+        "support_menu": "如需联系客服，请点击下方按钮：",
         "choose_role": (
             f"<tg-emoji emoji-id='{E_PEOPLE}'>👥</tg-emoji> <b>您在本交易中的角色？</b>\n\n"
             "请选择您的角色 — 第二个参与者将通过链接以相反角色加入。"
@@ -572,8 +578,22 @@ def main_menu_kb(lang="ru"):
         ],
         [InlineKeyboardButton(
             text=t(lang, "btn_support"),
+            callback_data="support",
+            icon_custom_emoji_id=E_SOS,
+        )],
+    ])
+
+def support_kb(lang="ru"):
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(
+            text=t(lang, "btn_support"),
             url=f"https://t.me/{MANAGER_USERNAME.lstrip('@')}",
             icon_custom_emoji_id=E_SOS,
+        )],
+        [InlineKeyboardButton(
+            text=t(lang, "btn_back_menu"),
+            callback_data="main_menu",
+            icon_custom_emoji_id=E_BACK,
         )],
     ])
 
@@ -687,6 +707,7 @@ menu_router = Router()
 deal_router = Router()
 balance_router = Router()
 req_router = Router()
+support_router = Router()
 admin_router = Router()
 
 # ---------- /start ----------
@@ -723,9 +744,34 @@ async def back_to_menu(cb: CallbackQuery, state: FSMContext):
     await state.clear()
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
-    await cb.message.edit_text(
+
+    # Если предыдущее сообщение с фото — удаляем и отправляем меню заново
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer(
         t(lang, "welcome").format(brand=BRAND_NAME, support=SUPPORT_USERNAME),
         reply_markup=main_menu_kb(lang),
+    )
+    await cb.answer()
+
+# ---------- Поддержка ----------
+@support_router.callback_query(F.data == "support")
+async def support_menu(cb: CallbackQuery):
+    user = await get_user(cb.from_user.id)
+    lang = get_lang(user)
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer_photo(
+        photo=SUPPORT_PHOTO,
+        caption=t(lang, "support_menu"),
+        reply_markup=support_kb(lang),
     )
     await cb.answer()
 
@@ -1018,6 +1064,7 @@ async def main():
 
     dp.include_router(start_router)
     dp.include_router(menu_router)
+    dp.include_router(support_router)
     dp.include_router(deal_router)
     dp.include_router(balance_router)
     dp.include_router(req_router)
