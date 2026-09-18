@@ -412,7 +412,7 @@ TEXTS = {
     },
 
     "zh": {
-        "choose_lang": "🌐 Выберите язык / Choose language / اختر اللغة:",
+        "choose_lang": "🌐 Выберите язык / Choose language:",
         "welcome": (
             f"<tg-emoji emoji-id='{E_CROWN}'>👑</tg-emoji> "
             "<b>{brand} MARKET · GARANT</b> "
