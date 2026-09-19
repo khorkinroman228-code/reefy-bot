@@ -19,8 +19,9 @@ from aiogram.types import (
 # ============ КОНФИГ ============
 BOT_TOKEN = "8692185250:AAEUPdWJ089uktdKVihUpMHSJ61aIuEl2_w"
 BRAND_NAME = "Reefy"
-MANAGER_USERNAME = "@reefyman"
-SUPPORT_USERNAME = "@ReefySupport"
+MANAGER_USERNAME = "@ReefyManager"      # менеджер по сделкам (в текстах)
+SUPPORT_USERNAME = "@ReefyManager"      # для текста "Техническая поддержка"
+SUPPORT_BUTTON_USERNAME = "@reefyman"   # куда ведёт кнопка "Поддержка"
 COMMISSION_PERCENT = 1.0
 ADMIN_IDS = [8927904754]
 DB_PATH = "reefy.db"
@@ -610,7 +611,7 @@ def support_kb(lang="ru"):
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
             text=t(lang, "btn_support"),
-            url=f"https://t.me/{MANAGER_USERNAME.lstrip('@')}",
+            url=f"https://t.me/{SUPPORT_BUTTON_USERNAME.lstrip('@')}",
             icon_custom_emoji_id=E_SOS,
         )],
         [InlineKeyboardButton(
