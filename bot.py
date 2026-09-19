@@ -19,10 +19,10 @@ from aiogram.types import (
 # ============ КОНФИГ ============
 BOT_TOKEN = "8692185250:AAEUPdWJ089uktdKVihUpMHSJ61aIuEl2_w"
 BRAND_NAME = "Reefy"
-MANAGER_USERNAME = "@ReefyManager"
-SUPPORT_USERNAME = "@ReefyManager"
+MANAGER_USERNAME = "@reefyman"
+SUPPORT_USERNAME = "@ReefySupport"
 COMMISSION_PERCENT = 1.0
-ADMIN_IDS = [6311071254]
+ADMIN_IDS = [8927904754]
 DB_PATH = "reefy.db"
 MIN_TON_WITHDRAW = 2.0
 
