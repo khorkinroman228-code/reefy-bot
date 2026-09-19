@@ -821,7 +821,16 @@ async def choose_seller(cb: CallbackQuery, state: FSMContext):
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
     await state.update_data(role="seller", lang=lang)
-    await cb.message.edit_text(t(lang, "choose_payment"), reply_markup=payment_kb(lang))
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer(
+        t(lang, "choose_payment"),
+        reply_markup=payment_kb(lang),
+    )
     await cb.answer()
 
 @deal_router.callback_query(F.data.startswith("pay:"))
@@ -1030,8 +1039,14 @@ async def req_ton(cb: CallbackQuery, state: FSMContext):
     lang = get_lang(user)
     await state.update_data(lang=lang)
     await state.set_state(Requisites.entering_ton)
-    await cb.message.edit_caption(
-        caption=t(lang, "enter_ton").format(min_ton=MIN_TON_WITHDRAW),
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer(
+        t(lang, "enter_ton").format(min_ton=MIN_TON_WITHDRAW),
         reply_markup=back_menu_kb(lang),
     )
     await cb.answer()
@@ -1050,8 +1065,14 @@ async def req_card(cb: CallbackQuery, state: FSMContext):
     lang = get_lang(user)
     await state.update_data(lang=lang)
     await state.set_state(Requisites.choosing_region)
-    await cb.message.edit_caption(
-        caption=t(lang, "choose_region"),
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer(
+        t(lang, "choose_region"),
         reply_markup=region_kb(lang),
     )
     await cb.answer()
@@ -1063,8 +1084,14 @@ async def choose_region(cb: CallbackQuery, state: FSMContext):
     lang = data.get("lang", "ru")
     await state.update_data(region=region)
     await state.set_state(Requisites.entering_card)
-    await cb.message.edit_caption(
-        caption=t(lang, "enter_card"),
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer(
+        t(lang, "enter_card"),
         reply_markup=back_menu_kb(lang),
     )
     await cb.answer()
