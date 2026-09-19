@@ -27,6 +27,9 @@ DB_PATH = "reefy.db"
 MIN_TON_WITHDRAW = 2.0
 
 SUPPORT_PHOTO = "https://i.imgur.com/F6UddrX.jpeg"
+BALANCE_PHOTO = "https://i.imgur.com/kumwHxs.jpeg"
+REQUISITES_PHOTO = "https://i.imgur.com/TBrOAbO.jpeg"
+CREATE_DEAL_PHOTO = "https://i.imgur.com/uxzkwor.jpeg"
 
 logging.basicConfig(level=logging.INFO)
 
@@ -559,7 +562,7 @@ TEXTS = {
         "error": "错误",
         "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 交易 #{{code}} 已完成，{{amount}} 已记入卖家余额",
         "admin_set_deals_usage": "用法：/set_my_deals <数字>",
-        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 已设置 {{n}} 次成功交易",
+        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 设置 {{n}} 次成功交易",
     },
 }
 
@@ -800,7 +803,17 @@ async def create_deal_start(cb: CallbackQuery, state: FSMContext):
     await state.clear()
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
-    await cb.message.edit_text(t(lang, "choose_role"), reply_markup=role_kb(lang))
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer_photo(
+        photo=CREATE_DEAL_PHOTO,
+        caption=t(lang, "choose_role"),
+        reply_markup=role_kb(lang),
+    )
     await cb.answer()
 
 @deal_router.callback_query(F.data == "role:seller")
@@ -942,10 +955,8 @@ async def item_sent(cb: CallbackQuery, bot: Bot):
     await cb.message.edit_text(t(lang, "item_sent_ok"), reply_markup=back_menu_kb(lang))
     await cb.answer()
 
-    # Ищем последнюю сделку продавца в статусе paid
     deal = await get_active_deal_by_seller(cb.from_user.id)
 
-    # Отправляем уведомление покупателю
     if deal and deal["buyer_id"]:
         buyer = await get_user(deal["buyer_id"])
         buyer_lang = get_lang(buyer) if buyer else "ru"
@@ -981,7 +992,17 @@ async def show_balance(cb: CallbackQuery):
         percent=COMMISSION_PERCENT,
         deals=user["successful_deals"],
     )
-    await cb.message.edit_text(text, reply_markup=back_menu_kb(lang))
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer_photo(
+        photo=BALANCE_PHOTO,
+        caption=text,
+        reply_markup=back_menu_kb(lang),
+    )
     await cb.answer()
 
 # ---------- Реквизиты ----------
@@ -990,7 +1011,17 @@ async def req_menu(cb: CallbackQuery, state: FSMContext):
     await state.clear()
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
-    await cb.message.edit_text(t(lang, "req_menu"), reply_markup=req_menu_kb(lang))
+
+    try:
+        await cb.message.delete()
+    except Exception:
+        pass
+
+    await cb.message.answer_photo(
+        photo=REQUISITES_PHOTO,
+        caption=t(lang, "req_menu"),
+        reply_markup=req_menu_kb(lang),
+    )
     await cb.answer()
 
 @req_router.callback_query(F.data == "req:ton")
@@ -999,8 +1030,8 @@ async def req_ton(cb: CallbackQuery, state: FSMContext):
     lang = get_lang(user)
     await state.update_data(lang=lang)
     await state.set_state(Requisites.entering_ton)
-    await cb.message.edit_text(
-        t(lang, "enter_ton").format(min_ton=MIN_TON_WITHDRAW),
+    await cb.message.edit_caption(
+        caption=t(lang, "enter_ton").format(min_ton=MIN_TON_WITHDRAW),
         reply_markup=back_menu_kb(lang),
     )
     await cb.answer()
@@ -1019,7 +1050,10 @@ async def req_card(cb: CallbackQuery, state: FSMContext):
     lang = get_lang(user)
     await state.update_data(lang=lang)
     await state.set_state(Requisites.choosing_region)
-    await cb.message.edit_text(t(lang, "choose_region"), reply_markup=region_kb(lang))
+    await cb.message.edit_caption(
+        caption=t(lang, "choose_region"),
+        reply_markup=region_kb(lang),
+    )
     await cb.answer()
 
 @req_router.callback_query(F.data.startswith("region:"))
@@ -1029,7 +1063,10 @@ async def choose_region(cb: CallbackQuery, state: FSMContext):
     lang = data.get("lang", "ru")
     await state.update_data(region=region)
     await state.set_state(Requisites.entering_card)
-    await cb.message.edit_text(t(lang, "enter_card"), reply_markup=back_menu_kb(lang))
+    await cb.message.edit_caption(
+        caption=t(lang, "enter_card"),
+        reply_markup=back_menu_kb(lang),
+    )
     await cb.answer()
 
 @req_router.message(Requisites.entering_card)
