@@ -151,6 +151,15 @@ async def get_deal_by_code(code):
         cur = await db.execute("SELECT * FROM deals WHERE deal_code = ?", (code,))
         return await cur.fetchone()
 
+async def get_active_deal_by_seller(seller_id):
+    async with aiosqlite.connect(DB_PATH) as db:
+        db.row_factory = aiosqlite.Row
+        cur = await db.execute(
+            "SELECT * FROM deals WHERE seller_id = ? AND status = 'paid' ORDER BY id DESC LIMIT 1",
+            (seller_id,),
+        )
+        return await cur.fetchone()
+
 async def set_deal_buyer(code, buyer_id):
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute("UPDATE deals SET buyer_id = ? WHERE deal_code = ?", (buyer_id, code))
@@ -285,6 +294,10 @@ TEXTS = {
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Вы подтвердили оплату. Ожидайте подтверждения от менеджера.",
         "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Отлично! Ожидайте подтверждения от менеджера.",
+        "seller_item_sent_notify": (
+            "📦 Продавец нажал на кнопку:\n"
+            "«Я передал товар»"
+        ),
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Сделка не найдена.",
         "admin_only": "⛔ Команда только для администратора.",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Введите корректное число, например: 100.5",
@@ -407,6 +420,10 @@ TEXTS = {
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> You confirmed payment. Wait for manager confirmation.",
         "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> Great! Wait for manager confirmation.",
+        "seller_item_sent_notify": (
+            "📦 The seller pressed the button:\n"
+            "«I sent the item»"
+        ),
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Deal not found.",
         "admin_only": "⛔ Admin-only command.",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> Enter a valid number, e.g. 100.5",
@@ -529,6 +546,10 @@ TEXTS = {
         ),
         "buyer_paid": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 您已确认付款。请等待管理员确认。",
         "item_sent_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 很好！请等待管理员确认。",
+        "seller_item_sent_notify": (
+            "📦 卖家按下了按钮：\n"
+            "«我已发送物品»"
+        ),
         "deal_not_found": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 未找到交易。",
         "admin_only": "⛔ 仅管理员命令。",
         "invalid_amount": f"<tg-emoji emoji-id='{E_CHECK}'>❌</tg-emoji> 请输入有效数字，例如：100.5",
@@ -915,11 +936,26 @@ async def buyer_paid(cb: CallbackQuery, bot: Bot):
         logging.error(f"Не смог отправить продавцу: {e}")
 
 @deal_router.callback_query(F.data == "item_sent")
-async def item_sent(cb: CallbackQuery):
+async def item_sent(cb: CallbackQuery, bot: Bot):
     user = await get_user(cb.from_user.id)
     lang = get_lang(user)
     await cb.message.edit_text(t(lang, "item_sent_ok"), reply_markup=back_menu_kb(lang))
     await cb.answer()
+
+    # Ищем последнюю сделку продавца в статусе paid
+    deal = await get_active_deal_by_seller(cb.from_user.id)
+
+    # Отправляем уведомление покупателю
+    if deal and deal["buyer_id"]:
+        buyer = await get_user(deal["buyer_id"])
+        buyer_lang = get_lang(buyer) if buyer else "ru"
+        try:
+            await bot.send_message(
+                deal["buyer_id"],
+                t(buyer_lang, "seller_item_sent_notify"),
+            )
+        except Exception as e:
+            logging.error(f"Не смог отправить покупателю: {e}")
 
 # ---------- Баланс ----------
 @balance_router.callback_query(F.data == "balance")
