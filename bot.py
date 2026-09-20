@@ -21,6 +21,7 @@ BOT_TOKEN = "8692185250:AAEUPdWJ089uktdKVihUpMHSJ61aIuEl2_w"
 BRAND_NAME = "Reefy"
 MANAGER_USERNAME = "@ReefyManager"
 SUPPORT_USERNAME = "@ReefyManager"
+REVIEWS_URL = "https://t.me/ReefyOtz"
 COMMISSION_PERCENT = 1.0
 ADMIN_IDS = [8927904754]
 DB_PATH = "reefy.db"
@@ -206,6 +207,7 @@ TEXTS = {
         "btn_my_balance": "Мой баланс",
         "btn_requisites": "Реквизиты",
         "btn_support": "Поддержка",
+        "btn_reviews": "Отзывы",
         "btn_back_menu": "Вернуться в меню",
         "btn_seller": "Я продавец",
         "btn_ton_wallet": "На GRAM-кошелёк",
@@ -332,6 +334,7 @@ TEXTS = {
         "btn_my_balance": "My balance",
         "btn_requisites": "Requisites",
         "btn_support": "Support",
+        "btn_reviews": "Reviews",
         "btn_back_menu": "Back to menu",
         "btn_seller": "I'm a seller",
         "btn_ton_wallet": "To GRAM wallet",
@@ -458,6 +461,7 @@ TEXTS = {
         "btn_my_balance": "我的余额",
         "btn_requisites": "收款信息",
         "btn_support": "客服支持",
+        "btn_reviews": "评价",
         "btn_back_menu": "返回菜单",
         "btn_seller": "我是卖家",
         "btn_ton_wallet": "到 GRAM 钱包",
@@ -599,11 +603,18 @@ def main_menu_kb(lang="ru"):
                 icon_custom_emoji_id=E_MSG,
             ),
         ],
-        [InlineKeyboardButton(
-            text=t(lang, "btn_support"),
-            callback_data="support",
-            icon_custom_emoji_id=E_SOS,
-        )],
+        [
+            InlineKeyboardButton(
+                text=t(lang, "btn_reviews"),
+                url=REVIEWS_URL,
+                icon_custom_emoji_id=E_CHECK,
+            ),
+            InlineKeyboardButton(
+                text=t(lang, "btn_support"),
+                callback_data="support",
+                icon_custom_emoji_id=E_SOS,
+            ),
+        ],
     ])
 
 def support_kb(lang="ru"):
