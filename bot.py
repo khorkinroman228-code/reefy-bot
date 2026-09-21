@@ -566,7 +566,7 @@ TEXTS = {
         "error": "错误",
         "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 交易 #{{code}} 已完成，{{amount}} 已记入卖家余额",
         "admin_set_deals_usage": "用法：/set_my_deals <数字>",
-        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 设置 {{n}} 次成功交易",
+        " awaitadmin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 设置 {{n}} 次成功交易",
     },
 }
 
@@ -747,7 +747,7 @@ admin_router = Router()
 # ---------- /start ----------
 @start_router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
-    await state.clear()
+    state.clear()
     await create_user(message.from_user.id, message.from_user.username)
 
     args = message.text.split(maxsplit=1)
@@ -1166,7 +1166,7 @@ async def cmd_set_my_deals(message: Message):
     await message.answer(t("ru", "admin_set_deals_ok").format(n=n))
 
 # ============ ЗАПУСК ============
-    async def main():
+async def main():
     await init_db()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher(storage=MemoryStorage())
@@ -1184,11 +1184,3 @@ async def cmd_set_my_deals(message: Message):
 
 if __name__ == "__main__":
     asyncio.run(main())
-    async def main():
-    logging.basicConfig(level=logging.INFO)
-    
-    # Удаляем вебхук и старые обновления — ЭТА СТРОКА ЛЕЧИТ ОШИБКУ
-    await bot.delete_webhook(drop_pending_updates=True)
-    
-    print("Бот запущен...")
-    await dp.start_polling(bot)
