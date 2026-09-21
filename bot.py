@@ -17,10 +17,10 @@ from aiogram.types import (
 )
 
 # ============ КОНФИГ ============
-BOT_TOKEN = "8692185250:AAEUPdWJ089uktdKVihUpMHSJ61aIuEl2_w"
+BOT_TOKEN = "8942000439:AAEPUaOeloZrfux5phHoUeMq41Cdr_5ylaU"
 BRAND_NAME = "Reefy"
-MANAGER_USERNAME = "@ReefyManager"
-SUPPORT_USERNAME = "@ReefyManager"
+MANAGER_USERNAME = "@ReepfyManager"
+SUPPORT_USERNAME = "@ReepfyManager"
 REVIEWS_URL = "https://t.me/ReefyOtz"
 COMMISSION_PERCENT = 1.0
 ADMIN_IDS = [8927904754]
@@ -566,7 +566,7 @@ TEXTS = {
         "error": "错误",
         "admin_deal_done": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 交易 #{{code}} 已完成，{{amount}} 已记入卖家余额",
         "admin_set_deals_usage": "用法：/set_my_deals <数字>",
-        " awaitadmin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 设置 {{n}} 次成功交易",
+        "admin_set_deals_ok": f"<tg-emoji emoji-id='{E_CHECK}'>✅</tg-emoji> 设置 {{n}} 次成功交易",
     },
 }
 
@@ -747,7 +747,7 @@ admin_router = Router()
 # ---------- /start ----------
 @start_router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
-    state.clear()
+    await state.clear()
     await create_user(message.from_user.id, message.from_user.username)
 
     args = message.text.split(maxsplit=1)
