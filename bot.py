@@ -1184,3 +1184,11 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+    async def main():
+    logging.basicConfig(level=logging.INFO)
+    
+    # Удаляем вебхук и старые обновления — ЭТА СТРОКА ЛЕЧИТ ОШИБКУ
+    await bot.delete_webhook(drop_pending_updates=True)
+    
+    print("Бот запущен...")
+    await dp.start_polling(bot)
