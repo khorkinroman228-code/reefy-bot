@@ -1166,7 +1166,7 @@ async def cmd_set_my_deals(message: Message):
     await message.answer(t("ru", "admin_set_deals_ok").format(n=n))
 
 # ============ ЗАПУСК ============
-async def main():
+    async def main():
     await init_db()
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher(storage=MemoryStorage())
